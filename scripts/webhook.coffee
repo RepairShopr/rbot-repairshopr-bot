@@ -43,5 +43,5 @@ module.exports = (robot) ->
       if err
         res.send("some error: #{JSON.stringify(err)}")
       else
-        res.send("OK")
+        res.send(postRes)
       # your code here
