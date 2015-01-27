@@ -28,10 +28,11 @@ module.exports = (robot) ->
   robot.router.post '/webhook/:room', (req, res) ->
     room = "#"+"#{req.params.room}"
     data = null
-    try
-      data = JSON.parse req.body.payload
-    catch err
-      robot.emit 'error', err
+    robot.messageRoom room, req.body.payload
+    # try
+    #   data = JSON.parse req.body.payload
+    # catch err
+    #   robot.emit 'error', err
 
     token = data.token
 
