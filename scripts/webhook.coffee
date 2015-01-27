@@ -23,24 +23,25 @@
 #   blairanderson
 
 WEBHOOK_TOKEN = process.env.WEBHOOK_TOKEN || "taco"
+HUBOT_SLACK_TOKEN = process.env.HUBOT_SLACK_TOKEN
+SLACK_SUBDOMAIN = process.env.SLACK_SUBDOMAIN
+# 'payload={"text": "This is posted to <#general> and comes from *monkey-bot*.", "channel": "#general", "username": "monkey-bot", "icon_emoji": ":monkey_face:"}' https://my-team.slack.com/services/hooks/incoming-webhook?token=XXXXXXXXXXXXXXX
 
 module.exports = (robot) ->
   robot.router.post '/webhook/:room', (req, res) ->
     room = "#"+"#{req.params.room}"
-    data = {}
-    envelope = {
-      room: room
+    message = {
+        "text": room,
+        "channel": room,
+        "username": "lita"
+        "icon_emoji": ":cow:"
     }
-    messages = [
-        {text: room}
-    ]
-    robot.send(envelope, messages)
 
-    token = data.token
-
-    message = data.message
-
-    if token == WEBHOOK_TOKEN
-      res.send 'OK'
-    else
-      res.send 'AIGHT'
+    url = "https://#{SLACK_SUBDOMAIN}.slack.com/services/hooks/incoming-webook?token=#{HUBOT_SLACK_TOKEN}"
+    data = JSON.stringify(message)
+    robot.http(url).post(data) (err, res, body) ->
+      if err
+        res.send("some error: #{JSON.stringify(err)}")
+      else
+        res.send("OK")
+      # your code here
