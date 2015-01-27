@@ -28,13 +28,13 @@ module.exports = (robot) ->
   robot.router.post '/webhook/:room', (req, res) ->
     room = "#"+"#{req.params.room}"
     data = {}
-    robot.send
-      envelope: {
-        room: room
-      }
-      messages: [
-          {text: room}
-      ]
+    envelope = {
+      room: room
+    }
+    messages = [
+        {text: room}
+    ]
+    robot.send(envelope, messages)
 
     token = data.token
 
