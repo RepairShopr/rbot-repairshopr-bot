@@ -25,14 +25,20 @@
 WEBHOOK_TOKEN = process.env.WEBHOOK_TOKEN || "taco"
 
 module.exports = (robot) ->
-  robot.router.post '/hubot/webhook', (req, res) ->
-    data   = JSON.parse req.body.payload
+  robot.router.post '/webhook/:room', (req, res) ->
+    room = "#"+"#{req.params.room}"
+    data = null
+    try
+      data = JSON.parse req.body.payload
+    catch err
+      robot.emit 'error', err
+
     token = data.token
-    room = data.room
+
     message = data.message
 
     if token == WEBHOOK_TOKEN
       robot.messageRoom room, message
       res.send 'OK'
     else
-      res.send 'ERROR'
+      res.send 'AIGHT'
