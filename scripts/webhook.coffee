@@ -27,6 +27,7 @@ WEBHOOK_TOKEN = process.env.WEBHOOK_TOKEN || "taco"
 module.exports = (robot) ->
   robot.router.post '/webhook/:room', (req, res) ->
     room = "#"+"#{req.params.room}"
+    data = {}
     robot.send
       envelope: {
         room: room
