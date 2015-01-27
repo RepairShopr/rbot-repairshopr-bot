@@ -33,7 +33,7 @@ module.exports = (robot) ->
         room: room
       }
       messages: [
-          req.body.payload
+          {text: room}
       ]
 
     token = data.token
